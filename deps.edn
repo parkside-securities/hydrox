@@ -1,0 +1,16 @@
+{:mvn/local-repo ".m2"
+ :mvn/repos {"parkside-maven-repo" {:url "s3://parkside-maven-repo/release"}}
+ :deps {org.clojure/clojure    {:mvn/version "1.10.0"}
+        im.chit/jai            {:mvn/version "0.2.10"}
+        im.chit/hara.data      {:mvn/version "2.2.17"}
+        im.chit/hara.io.watch  {:mvn/version "2.2.17"}
+        im.chit/hara.common.checks  {:mvn/version "2.2.17"}
+        im.chit/hara.common.watch  {:mvn/version "2.2.17"}
+        im.chit/hara.component {:mvn/version "2.2.17"}
+        im.chit/hara.concurrent.pipe {:mvn/version "2.2.17"}
+        im.chit/hara.event     {:mvn/version "2.2.17"}
+        im.chit/hara.string    {:mvn/version "2.2.17"}
+        hiccup                 {:mvn/version "1.0.5"}
+        markdown-clj           {:mvn/version "0.9.68"}
+        stencil                {:mvn/version "0.5.0"}
+        me.raynes/fs           {:mvn/version "1.4.6"}}
