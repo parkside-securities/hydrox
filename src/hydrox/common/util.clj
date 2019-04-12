@@ -73,7 +73,7 @@
       :root root
       :description ""
       :license ""
-      :documentation ""
+      :documentation (:documentation proj-map)
       :url url
       :version ""
       :dependencies dependencies})))
