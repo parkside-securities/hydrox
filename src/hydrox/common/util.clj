@@ -27,7 +27,7 @@
 
 (defn read-project
   "like `leiningen.core.project/read` but with less features'
- 
+
    (keys (read-project (io/file \"example/project.clj\")))
    => (just [:description :license :name :source-paths :test-paths
              :documentation :root :url :version :dependencies] :in-any-order)"
@@ -58,7 +58,7 @@
    (let [path (.getCanonicalPath file)
          root  (subs path 0 (- (count path) 9))
          url (str "github.com/parkside-securities/")
-         project-name (last (clojure.string/split root))
+         project-name (last (clojure.string/split root #"/"))
          proj-map (read-string (slurp file))
          dependencies (merge (:deps proj-map)
                              (apply hash-map (remove nil? (map :extra-deps (vals (:aliases proj-map))))))
