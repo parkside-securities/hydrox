@@ -80,6 +80,12 @@
   ([{:keys [state] :as reg} name]
    (doc/render-single @state name)))
 
+(defn direct-path
+  [path file]
+  (if (= "deps.edn" path)
+    (util/deps-read-project file)
+    (util/read-project file)))
+
 (defn dive
   "starts a dive"
   {:added "0.1"}
@@ -88,7 +94,7 @@
   ([path opts]
    (patch/patch-read-keyword)
    (->> (io/file path)
-        (util/deps-read-project)
+        (direct-path path)
         (merge opts)
         (regulator/regulator)
         (component/start))))
