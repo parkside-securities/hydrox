@@ -62,8 +62,7 @@
          proj-map (read-string (slurp file))
          dependencies (merge (:deps proj-map)
                              (apply hash-map (remove nil? (map :extra-deps (vals (:aliases proj-map))))))
-         source-paths (update-in proj-map [:paths]
-                                 (fnil identity ["src"]))
+         source-paths (vec (map (fnil identity ["src"]) (:paths proj-map)))
          other-paths (vec
                       (flatten
                        (remove nil? (map :extra-paths (vals (:aliases proj-map))))))
