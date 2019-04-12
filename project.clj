@@ -1,4 +1,4 @@
-(defproject parkside-securities/hydrox "0.10.32-SNAPSHOT"
+(defproject parkside-securities/hydrox "0.10.33-SNAPSHOT"
   :description "dive deeper into your code"
   :url "https://github.com/helpshift/hydrox"
   :license {:name "Eclipse Public License"
