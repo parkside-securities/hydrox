@@ -1,5 +1,6 @@
 (ns hydrox.common.util
-  (:require [clojure.java.io :as io]))
+  (:require [clojure.java.io :as io]
+            [clojure.string :as string]))
 
 (defn full-path
   "constructs a path from a project
@@ -53,19 +54,30 @@
    (keys (deps-read-project (io/file \"example/deps.edn\")))
    => (just [:description :license :name :source-paths :test-paths
              :documentation :root :url :version :dependencies] :in-any-order)"
+  {:added "0.2"}
   ([] (read-project (io/file "deps.edn")))
   ([file]
+   {:pre [(instance? java.io.File file)]}
    (let [path (.getCanonicalPath file)
          root  (subs path 0 (- (count path) 9))
-         url (str "github.com/parkside-securities/")
-         project-name (last (clojure.string/split root #"/"))
+         project-name (last (string/split root #"/"))
+         url (str "github.com/parkside-securities/" project-name)
          proj-map (read-string (slurp file))
-         dependencies (merge (:deps proj-map)
-                             (apply hash-map (remove nil? (map :extra-deps (vals (:aliases proj-map))))))
-         source-paths (vec (map (fnil identity ["src"]) (:paths proj-map)))
-         other-paths (vec
-                      (flatten
-                       (remove nil? (map :extra-paths (vals (:aliases proj-map))))))
+         dependencies (->> (:aliases proj-map)
+                           (vals)
+                           (map :extra-deps)
+                           (reduce into (:deps proj-map)))
+         source-paths (->> proj-map
+                           :paths
+                           (map (fnil identity "src"))
+                           (remove #{"../datamodel/generated_src" "generated_src"})
+                           vec)
+         other-paths (->> proj-map
+                          :aliases
+                          vals
+                          (mapcat :extra-paths)
+                          (remove #{"../datamodel/generated_src" "generated_src"})
+                          vec)
          test-paths (or (seq other-paths) ["test"])]
      {:name project-name
       :source-paths source-paths

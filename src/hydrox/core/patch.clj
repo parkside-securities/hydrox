@@ -9,7 +9,7 @@
   [reader initch opts]
   (let [ch (reader/read-char reader)]
     (if-not (utils/whitespace? ch)
-      (let [token (#'edn/read-token reader "kind" ch)]
+      (let [token (#'edn/read-token reader :keyword ch)]
         (keyword token))
       (read-err/reader-error reader "Invalid token: :"))))
 

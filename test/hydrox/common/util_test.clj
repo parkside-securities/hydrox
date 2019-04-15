@@ -24,3 +24,35 @@
   => (just [:description :license :name :source-paths :test-paths
             :documentation :root :url :version :dependencies] :in-any-order))
 
+^{:refer hydrox.common.util/deps-read-project :added "0.2"}
+(fact "like `read-project` but for deps.edn'"
+
+      (keys (deps-read-project (io/file "example/deps.edn")))
+      => (just [:description :license :name :source-paths :test-paths
+                :documentation :root :url :version :dependencies] :in-any-order))
+
+(fact "project name is correctly found"
+      (:name (deps-read-project (io/file "example/deps.edn")))
+      => "example")
+
+(fact "source paths do not include generated_src"
+      (:source-paths (deps-read-project (io/file "example/deps.edn")))
+      => ["src" "resources"])
+
+(fact "test paths do not include generated_src"
+      (:test-paths (deps-read-project (io/file "example/deps.edn")))
+      => ["dev/resources"
+          "test"
+          "load-schema"
+          "e2e-test"
+          "fake/resources"
+          "../datamodel/src"
+          "../datamodel/resources"])
+
+(fact "url is correctly formatted"
+      (:url (deps-read-project (io/file "example/deps.edn")))
+      => "github.com/parkside-securities/example")
+
+(fact "all deps present"
+      (count (keys (:dependencies (deps-read-project (io/file "example/deps.edn")))))
+      => 7)
