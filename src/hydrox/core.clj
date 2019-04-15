@@ -5,7 +5,8 @@
             [hydrox.core.patch :as patch]
             [hydrox.common.util :as util]
             [hara.component :as component]
-            [clojure.java.io :as io]))
+            [clojure.java.io :as io]
+            [clojure.string :as string]))
 
 (defn submerged?
   "checks if dive has started"
@@ -82,7 +83,7 @@
 
 (defn direct-path
   [path file]
-  (if (= "deps.edn" path)
+  (if (string/ends-with? path "deps.edn")
     (util/deps-read-project file)
     (util/read-project file)))
 
