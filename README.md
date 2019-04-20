@@ -9,14 +9,12 @@ dive deeper into your code
 ## Installation
 
 ### Deps Project:
-1. In your `deps.edn`, add `hydrox` and `fudje` (optional, for more readable tests) to the `dev` alias:
+1. In your `deps.edn`, make sure the `dev` alias is on the latest `repl-bootstrap`, which includes `hydrox` and `fudje`:
 ```clojure
   :dev      {:extra-deps
              {parkside-securities/repl-bootstrap {:git/url "git@github.com:parkside-securities/repl-bootstrap.git"
-                                                  :sha     "4950c722bd306a06a5e51a1471889fd4bfcd6aa7"}
-              floatingpointio/graphql-builder    {:mvn/version "0.1.6"}
-              fudje                              {:mvn/version "0.9.7"}
-              parkside-securities/hydrox         {:mvn/version "0.10.36-SNAPSHOT"}}
+                                                  :sha     "Anything later than e9de50b" }
+}
 ```
 2. Create the `:documentation` map in your `deps.edn`. This is how Hydrox knows where to put generated documents:
 ```clojure
@@ -62,8 +60,6 @@ dive deeper into your code
 
 7. In the repl run:
 ```clojure
-(use 'hydrox.core)
-(dive)
 (generate-docs)
 ```
 If you have correctly formatted your `:documentation` map, docs should be generated into your `docs` folder!
@@ -73,7 +69,7 @@ If you have correctly set up your pedestal server, you should be able to see the
 ```yaml
  - script:
         name: generate docs
-        code: clojure -A:dev -e "(use 'hydrox.core) (dive) (generate-docs) (System/exit 0)"
+        code: clojure -A:dev -e "(generate-docs)"
 ```
 
 
