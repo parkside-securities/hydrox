@@ -1,0 +1,65 @@
+{:mvn/local-repo ".m2"
+ :mvn/repos {"parkside-maven-repo" {:url "s3://parkside-maven-repo/release"}}
+ :paths ["src" "resources"]
+ :deps {org.clojure/clojure    {:mvn/version "1.10.0"}
+        hara                   {:mvn/version "2.2.0-SNAPSHOT"}}
+ :documentation {:type   :portfolio
+                  :name   "example"
+                  :output "doc"
+                  :description "code patterns and utilities"
+                  :tracking "UA-31320512-2"
+                  :owners [{:name    "Chris Zheng"
+                            :email   "z@caudate.me"
+                            :website "http://z.caudate.me"}]
+                  :paths ["test/documentation"]
+                  :files {"home"
+                          {:input "test/documentation/example/home.clj"}
+                          "logic"
+                          {:input "test/documentation/logic_tut/index.clj"
+                           :title "Relational and Logic Programming"}
+                          "on-lisp"
+                          {:input "test/documentation/on_lisp/book.clj"}
+                          "quickstart"
+                          {:input "test/documentation/example/quickstart.clj"}
+                          "component"
+                          {:input "test/documentation/example/component.clj"}
+                          "watch"
+                          {:input "test/documentation/example/watch.clj"}
+                          "scheduler"
+                          {:input "test/documentation/example/scheduler.clj"}}
+                  :html {:logo  "hara.png"
+                         :theme "clean"
+                         :home  "home"
+                         :navigation ["quickstart"
+                                      "on-lisp"
+                                      ["guides" ["component"
+                                                 "ova"
+                                                 "watch"
+                                                 "scheduler"]]
+                                      {:link "api", :text "api"}
+                                      {:link "https://gitter.im/zcaudate/hara",
+                                       :text "support"}
+                                      {:link "https://www.github.com/zcaudate/hara",
+                                       :text "source"}]}
+                  :link {:auto-tag    true
+                         :auto-number true}}
+ :aliases {:lint     {:extra-deps
+                      {com.jameslaverack/cljfmt-runner {:git/url "https://github.com/JamesLaverack/cljfmt-runner"
+                                                        :sha "57e956856669efee854e00765ad00e1eebaace2a"}}
+                      :main-opts ["-m" "cljfmt-runner.check"]}
+           :lint/fix {:extra-deps
+                      {com.jameslaverack/cljfmt-runner {:git/url "https://github.com/JamesLaverack/cljfmt-runner"
+                                                        :sha "57e956856669efee854e00765ad00e1eebaace2a"}}
+                      :main-opts ["-m" "cljfmt-runner.fix"]}
+           :dev      {:extra-deps
+                      {parkside-securities/repl-bootstrap {:git/url "git@github.com:parkside-securities/repl-bootstrap.git"
+                                                           :sha     "4950c722bd306a06a5e51a1471889fd4bfcd6aa7"}
+                       floatingpointio/graphql-builder  {:mvn/version "0.1.6"}}
+                      :extra-paths ["dev/resources" "test"]}
+           :load-schema {:extra-paths ["load-schema"]}
+           :e2e-test {:extra-deps
+                      {aleph                            {:mvn/version "0.4.6"} ; clojure http client library
+                       com.github.billybichon/livegql   {:mvn/version "1.0"}}
+                      :extra-paths ["e2e-test"]}
+           :fake     {:extra-paths ["fake/resources"]}
+           :local    {:extra-paths ["../datamodel/src" "../datamodel/resources" "../datamodel/generated_src"]}}}

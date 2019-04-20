@@ -5,7 +5,8 @@
             [hydrox.core.patch :as patch]
             [hydrox.common.util :as util]
             [hara.component :as component]
-            [clojure.java.io :as io]))
+            [clojure.java.io :as io]
+            [clojure.string :as string]))
 
 (defn submerged?
   "checks if dive has started"
@@ -80,15 +81,21 @@
   ([{:keys [state] :as reg} name]
    (doc/render-single @state name)))
 
+(defn direct-path
+  [path file]
+  (if (string/ends-with? path "deps.edn")
+    (util/deps-read-project file)
+    (util/read-project file)))
+
 (defn dive
   "starts a dive"
   {:added "0.1"}
-  ([] (dive "project.clj"))
+  ([] (dive "deps.edn"))
   ([path] (dive path {}))
   ([path opts]
    (patch/patch-read-keyword)
    (->> (io/file path)
-        (util/read-project)
+        (direct-path path)
         (merge opts)
         (regulator/regulator)
         (component/start))))
