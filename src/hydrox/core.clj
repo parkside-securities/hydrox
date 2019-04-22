@@ -8,6 +8,12 @@
             [clojure.java.io :as io]
             [clojure.string :as string]))
 
+(defn direct-path
+  [path file]
+  (if (string/ends-with? path "deps.edn")
+    (util/deps-read-project file)
+    (util/read-project file)))
+
 (defn submerged?
   "checks if dive has started"
   {:added "0.1"}
@@ -21,7 +27,7 @@
   ([] (single-use "deps.edn"))
   ([path]
    (patch/patch-read-keyword)
-   (let [proj  (util/read-project (io/file path))
+   (let [proj  (direct-path path (io/file path))
          folio (-> proj
                    (regulator/create-folio)
                    (regulator/init-folio))
@@ -80,12 +86,6 @@
    (doc/render-all @state))
   ([{:keys [state] :as reg} name]
    (doc/render-single @state name)))
-
-(defn direct-path
-  [path file]
-  (if (string/ends-with? path "deps.edn")
-    (util/deps-read-project file)
-    (util/read-project file)))
 
 (defn dive
   "starts a dive"
