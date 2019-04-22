@@ -18,7 +18,7 @@
 (defn single-use
   "returns a working regulator for a given project file"
   {:added "0.1"}
-  ([] (single-use "project.clj"))
+  ([] (single-use "deps.edn"))
   ([path]
    (patch/patch-read-keyword)
    (let [proj  (util/read-project (io/file path))
