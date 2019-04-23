@@ -83,7 +83,7 @@
           entry          (merge (util/filter-pred string? project)
                                 (-> opts :template :defaults)
                                 entry)
-          _              (println "^\n" (select-keys entry) "^\n")
+          _              (println "^\n" (keys entry) "^\n")
           template-path  (util/full-path (:template entry) (-> opts :template :path) project)
           output-path    (util/full-path (str name ".html") (:output opts) project)
           template       (slurp template-path)
