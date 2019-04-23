@@ -83,15 +83,17 @@
           entry          (merge (util/filter-pred string? project)
                                 (-> opts :template :defaults)
                                 entry)
+          _              (println "^\n" (select-keys entry) "^\n")
           template-path  (util/full-path (:template entry) (-> opts :template :path) project)
           output-path    (util/full-path (str name ".html") (:output opts) project)
           template       (slurp template-path)
+          _              (println "%\n" (find-includes template) "%\n")
           includes       (->> (find-includes template)
                               (select-keys entry))
           includes       (prepare-includes name includes folio)
           html           (render/replace-template template includes opts project)]
       (spit output-path html)
-      (println "SUCCESS"))
+      (println "SUCCESS\n %%%" includes "\n"))
     (catch Throwable t
       (println "ERROR")
       (.printStackTrace t)
