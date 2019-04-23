@@ -56,6 +56,7 @@
   "prepare template accept includes"
   {:added "0.1"}
   [name includes folio]
+  (println "name: " name "\nincludes: " includes "\nfolio:" folio "\n")
   (let [no-doc (->> (filter (fn [[k v]] (#{:article :navigation} v)) includes)
                     empty?)]
     (cond no-doc
