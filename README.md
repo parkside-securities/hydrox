@@ -9,12 +9,11 @@ dive deeper into your code
 ## Installation
 
 ### Deps Project:
-1. In your `deps.edn`, make sure the `dev` alias is on the latest `repl-bootstrap`, which includes `hydrox` and `fudje`. Also add the old version of `core.match` so `hydrox` can properly parse html:
+1. In your `deps.edn`, make sure the `dev` alias is on the latest `repl-bootstrap`, which includes `hydrox` and `fudje`:
 ```clojure
   :dev      {:extra-deps
              {parkside-securities/repl-bootstrap {:git/url "git@github.com:parkside-securities/repl-bootstrap.git"
-                                                  :sha     "Anything later than e9de50b"}
-             org.clojure/core.match              {:mvn/version  "0.2.2"}}
+                                                  :sha     "Anything later than e9de50b"}}
 ```
 2. Create the `:documentation` map in your `deps.edn`. This is how Hydrox knows where to put generated documents:
 ```clojure
