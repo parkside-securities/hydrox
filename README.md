@@ -9,11 +9,14 @@ dive deeper into your code
 ## Installation
 
 ### Deps Project:
-1. In your `deps.edn`, make sure the `dev` alias is on the latest `repl-bootstrap`, which includes `hydrox` and `fudje`:
+1. In your `deps.edn`, make a new `gen-docs` alias with the old version of `core.match` (used by `hydrox` to parse html), and the latest `repl-bootstrap`, which includes `hydrox` and `fudje`.:
 ```clojure
-  :dev      {:extra-deps
-             {parkside-securities/repl-bootstrap {:git/url "git@github.com:parkside-securities/repl-bootstrap.git"
-                                                  :sha     "Anything later than e9de50b"}}
+ :aliases {
+           :gen-docs  {:extra-deps
+                      {parkside-securities/repl-bootstrap {:git/url "git@github.com:parkside-securities/repl-bootstrap.git"
+                                                           :sha     "Anything later than e9de50b"}
+                       org.clojure/core.match             {:mvn/version  "0.2.2"}}
+           }
 ```
 2. Create the `:documentation` map in your `deps.edn`. This is how Hydrox knows where to put generated documents:
 ```clojure
@@ -55,7 +58,7 @@ dive deeper into your code
                    :file-path    "docs"}
 ```
 
-6. Open the repl with `clj -A:dev -e "(dev)(go)" -r`
+6. Open the repl with `clj -A:gen-docs -e "(dev)(go)" -r`
 
 7. In the repl run:
 ```clojure
@@ -68,7 +71,7 @@ If you have correctly set up your pedestal server, you should be able to see the
 ```yaml
  - script:
         name: generate docs
-        code: clojure -A:dev -e "(generate-docs)"
+        code: clojure -A:gen-docs -e "(generate-docs)"
 ```
 
 
