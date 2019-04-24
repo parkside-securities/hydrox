@@ -56,7 +56,6 @@
   "prepare template accept includes"
   {:added "0.1"}
   [name includes folio]
-  (println "name: " name "\nincludes: " includes "\nfolio:" folio "\n")
   (let [no-doc (->> (filter (fn [[k v]] (#{:article :navigation} v)) includes)
                     empty?)]
     (cond no-doc
@@ -93,7 +92,7 @@
           includes       (prepare-includes name includes folio)
           html           (render/replace-template template includes opts project)]
       (spit output-path html)
-      (println "SUCCESS\n %%%" includes "\n"))
+      (println "SUCCESS"))
     (catch Throwable t
       (println "ERROR")
       (.printStackTrace t)
