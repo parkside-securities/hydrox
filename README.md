@@ -70,7 +70,7 @@ If you have correctly set up your pedestal server, you should be able to see the
 ```yaml
  - script:
         name: generate docs
-        code: clojure -A:dev:gen-docs -e "(generate-docs)"
+        code: clojure -A:dev:gen-docs -e "(dev)(generate-docs)"
 ```
 
 
